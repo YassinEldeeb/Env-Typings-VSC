@@ -1,7 +1,6 @@
 declare namespace NodeJS {
   export interface ProcessEnv {
 /**
-     * ###  NODE_ENV
      * @example
      * ```
     process.env.NODE_ENV === "development"
@@ -9,7 +8,6 @@ declare namespace NodeJS {
      */
     NODE_ENV: "development" | "production" | "testing"
 /**
-     * ###  DATABASE_URL
      * @example
      * ```
     process.env.DATABASE_URL
@@ -17,7 +15,6 @@ declare namespace NodeJS {
      */
     DATABASE_URL: string
 /**
-     * ###  ACCESS_TOKEN_SECRET
      * @example
      * ```
     process.env.ACCESS_TOKEN_SECRET
@@ -25,7 +22,6 @@ declare namespace NodeJS {
      */
     ACCESS_TOKEN_SECRET: string
 /**
-     * ###  REFRESH_TOKEN_SECRET
      * @example
      * ```
     process.env.REFRESH_TOKEN_SECRET
@@ -33,7 +29,6 @@ declare namespace NodeJS {
      */
     REFRESH_TOKEN_SECRET: string
 /**
-     * ###  REDIS_HOST
      * @example
      * ```
     process.env.REDIS_HOST
@@ -41,7 +36,6 @@ declare namespace NodeJS {
      */
     REDIS_HOST: string
 /**
-     * ###  PG_USER
      * @example
      * ```
     process.env.PG_USER
@@ -49,7 +43,6 @@ declare namespace NodeJS {
      */
     PG_USER: string
 /**
-     * ###  PG_PASSWORD
      * @example
      * ```
     process.env.PG_PASSWORD
@@ -57,7 +50,6 @@ declare namespace NodeJS {
      */
     PG_PASSWORD: string
 /**
-     * ###  DB_NAME
      * @example
      * ```
     process.env.DB_NAME
@@ -65,7 +57,6 @@ declare namespace NodeJS {
      */
     DB_NAME: string
 /**
-     * ###  GMAIL_REFRESH_TOKEN
      * @example
      * ```
     process.env.GMAIL_REFRESH_TOKEN
@@ -73,7 +64,6 @@ declare namespace NodeJS {
      */
     GMAIL_REFRESH_TOKEN: string
 /**
-     * ###  GMAIL_EMAIL
      * @example
      * ```
     process.env.GMAIL_EMAIL
@@ -81,7 +71,6 @@ declare namespace NodeJS {
      */
     GMAIL_EMAIL: string
 /**
-     * ###  GMAIL_CLIENT_SECRET
      * @example
      * ```
     process.env.GMAIL_CLIENT_SECRET
@@ -89,7 +78,6 @@ declare namespace NodeJS {
      */
     GMAIL_CLIENT_SECRET: string
 /**
-     * ###  GMAIL_CLIENT_ID
      * @example
      * ```
     process.env.GMAIL_CLIENT_ID
@@ -97,7 +85,6 @@ declare namespace NodeJS {
      */
     GMAIL_CLIENT_ID: string
 /**
-     * ###  GITHUB_CLIENT_ID
      * @example
      * ```
     process.env.GITHUB_CLIENT_ID
@@ -105,7 +92,6 @@ declare namespace NodeJS {
      */
     GITHUB_CLIENT_ID: string
 /**
-     * ###  GITHUB_CLIENT_SECRET
      * @example
      * ```
     process.env.GITHUB_CLIENT_SECRET
@@ -113,7 +99,6 @@ declare namespace NodeJS {
      */
     GITHUB_CLIENT_SECRET: string
 /**
-     * ###  SERVER_URL
      * @example
      * ```
     process.env.SERVER_URL
@@ -121,7 +106,6 @@ declare namespace NodeJS {
      */
     SERVER_URL: string
 /**
-     * ###  AWS_ACCESS_KEY_ID
      * @example
      * ```
     process.env.AWS_ACCESS_KEY_ID
@@ -129,7 +113,6 @@ declare namespace NodeJS {
      */
     AWS_ACCESS_KEY_ID: string
 /**
-     * ###  AWS_SECRET_ACCESS_KEY
      * @example
      * ```
     process.env.AWS_SECRET_ACCESS_KEY
@@ -137,7 +120,6 @@ declare namespace NodeJS {
      */
     AWS_SECRET_ACCESS_KEY: string
 /**
-     * ###  AWS_ACCOUNT_ID
      * @example
      * ```
     process.env.AWS_ACCOUNT_ID
@@ -145,7 +127,6 @@ declare namespace NodeJS {
      */
     AWS_ACCOUNT_ID: string
 /**
-     * ###  AGE
      * @example
      * ```
     parseInt(process.env.AGE)

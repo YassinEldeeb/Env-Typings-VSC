@@ -23,7 +23,6 @@ export const genTypes = (parsedEnv: ParsedEnv[]): string => {
     }
 
     return `/**
-     * ###  ${key}
      * @example
      * \`\`\`
     ${enumVariants ? checksForVariants() : example}
