@@ -1,0 +1,7 @@
+{
+  "env-location": "dev.env",
+  "output-location": "./types",
+  "enums": {
+    "NODE_ENV": ["development", "production", "testing"]
+  }
+}
