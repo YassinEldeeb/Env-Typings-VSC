@@ -129,9 +129,9 @@ declare namespace NodeJS {
 /**
      * @example
      * ```
-    parseInt(process.env.AGE)
+    parseInt(process.env.AGE_RANGE) === 17
     ```
      */
-    AGE: string
+    AGE_RANGE: "17" | "18"
   }
 }

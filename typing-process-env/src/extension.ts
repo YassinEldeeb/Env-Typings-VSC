@@ -1,17 +1,21 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { workspace, ExtensionContext } from 'vscode'
+import {
+  workspace,
+  ExtensionContext,
+  Uri,
+  FileSystemWatcher,
+  window,
+} from 'vscode'
 import * as fs from 'fs'
 import * as path from 'path'
 import { parseEnv } from './utils/parseEnv'
 import { genTypes } from './utils/genTypes'
+import { mkdir } from './utils/mkdir'
 
 interface ConfigFile {
-  'env-location': string
-  'output-location': string
-  enums?: {
-    [key: string]: string[]
-  }
+  path: string
+  output?: string
 }
 
 // this method is called when your extension is activated
@@ -19,50 +23,84 @@ interface ConfigFile {
 export async function activate(context: ExtensionContext) {
   console.log('"env-typings" is now active!')
 
+  let listeners: { watcher: FileSystemWatcher; path: string }[] = []
+
   const configs = await workspace.findFiles('env-typings.json')
 
-  configs.map(async (e) => {
-    const config: ConfigFile = JSON.parse(fs.readFileSync(e.fsPath, 'utf-8'))
+  const configsWatcher = workspace.createFileSystemWatcher(
+    `**/env-typings.json`,
+    false,
+    false,
+    false
+  )
 
-    const envWatcher = workspace.createFileSystemWatcher(
-      `**/${config['env-location']}`,
-      true,
-      false,
-      false
-    )
+  configsWatcher.onDidCreate((e) => {
+    watchEnv(e)
+  })
 
-    envWatcher.onDidChange(({ fsPath }) => {
-      const envContent = fs.readFileSync(fsPath, 'utf-8')
+  configsWatcher.onDidChange((e) => {
+    watchEnv(e)
+  })
 
-      let parsedEnv = parseEnv(envContent)
+  configsWatcher.onDidDelete((e) => {
+    watchEnv(e, true)
+  })
 
-      try {
-        if (config.enums) {
-          Object.keys(config.enums).forEach((e) => {
-            parsedEnv.forEach((env, i) => {
-              if (env.key === e) {
-                // @ts-ignore
-                parsedEnv[i].enumVariants = config.enums[e]
-              }
-            })
-          })
-        }
-      } catch (error) {
-        console.log(error)
+  const watchEnv = (e: Uri, onlyRemove?: boolean) => {
+    try {
+      const existingListener = listeners.find(
+        (listener) => listener.path === e.fsPath
+      )
+
+      if (existingListener) {
+        existingListener.watcher.dispose()
+        listeners = listeners.filter((e) => e.path !== existingListener.path)
+
+        if (onlyRemove) return
       }
 
-      fs.writeFileSync(
-        path.join(
-          e.fsPath.replace('env-typings.json', ''),
-          config['output-location'],
-          'env.d.ts'
-        ),
-        genTypes(parsedEnv)
-      )
-    })
+      const config: ConfigFile = JSON.parse(fs.readFileSync(e.fsPath, 'utf-8'))
 
-    context.subscriptions.push(envWatcher)
-  })
+      if (!config['path']) {
+        return window.showInformationMessage(
+          'Please add "path" field in your config file at env-typings.json to let me know where your dev environment file is located so I can do the hard work for you 😎'
+        )
+      }
+
+      const envWatcher = workspace.createFileSystemWatcher(
+        path.join(e.fsPath.replace('env-typings.json', ''), config['path']),
+        true,
+        false,
+        false
+      )
+
+      listeners.push({ watcher: envWatcher, path: e.fsPath })
+
+      envWatcher.onDidChange(({ fsPath }) => {
+        const envContent = fs.readFileSync(fsPath, 'utf-8')
+
+        let parsedEnv = parseEnv(envContent)
+
+        const writeLocation = path.join(
+          e.fsPath.replace('env-typings.json', ''),
+          config['output'] || '',
+          'env.d.ts'
+        )
+
+        mkdir(writeLocation, 'env.d.ts')
+        fs.writeFileSync(writeLocation, genTypes(parsedEnv))
+      })
+
+      context.subscriptions.push(envWatcher)
+    } catch (error) {
+      console.log(error)
+      window.showInformationMessage(
+        'Please add "path" field in your config file at env-typings.json to let me know where your dev environment file is located so I can do the hard work for you 😎'
+      )
+    }
+  }
+
+  configs.map(async (e) => watchEnv(e))
 }
 
 // this method is called when your extension is deactivated
