@@ -1,11 +1,9 @@
-<div align="center">
 <h1>TS Env Typings</h1>
   
-![Icon](https://raw.githubusercontent.com/YassinEldeeb/Env-Typings-VSC/main/images/icon.png)
+![Icon](https://raw.githubusercontent.com/YassinEldeeb/Env-Typings-VSC/main/images/vsIcon.png)
 
-</div>
   
-### TS Env Typings is an extension to auto generate Typescript typings for your env variables from your development .env file everytime you save the specefied file.
+TS Env Typings is an extension to auto generate Typescript typings for your env variables from your development .env file everytime you save the specefied file.
 
 ![Showoff](https://raw.githubusercontent.com/YassinEldeeb/Env-Typings-VSC/main/images/index.png)
 
