@@ -41,9 +41,4 @@ That's it enjoy your auto generated typings from your .env file everytime you hi
 NODE_ENV='development' # variants: "development" | "production" | "testing"
 ```
 
-## Requirements
-
-- Typescript Project
-- @types/node installed
-
 **Enjoy!**
