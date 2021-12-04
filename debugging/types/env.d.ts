@@ -133,5 +133,12 @@ declare namespace NodeJS {
     ```
      */
     AGE_RANGE: "17" | "18"
+/**
+     * @example
+     * ```
+    process.env.NEW
+    ```
+     */
+    NEW: string
   }
 }

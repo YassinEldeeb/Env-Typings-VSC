@@ -1,23 +1,28 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import {
-  workspace,
-  ExtensionContext,
-  Uri,
-  FileSystemWatcher,
-  window,
-} from 'vscode'
 import * as fs from 'fs'
 import * as path from 'path'
-import { parseEnv } from './utils/parseEnv'
+import {
+  CompletionItem,
+  ExtensionContext,
+  FileSystemWatcher,
+  languages,
+  MarkdownString,
+  SnippetString,
+  Uri,
+  window,
+  workspace,
+} from 'vscode'
 import { genTypes } from './utils/genTypes'
 import { mkdir } from './utils/mkdir'
+import { parseEnv } from './utils/parseEnv'
 
 interface ConfigFile {
   path: string
   output?: string
 }
 
+const configFileName = 'env-typings.json'
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export async function activate(context: ExtensionContext) {
@@ -25,14 +30,38 @@ export async function activate(context: ExtensionContext) {
 
   let listeners: { watcher: FileSystemWatcher; path: string }[] = []
 
-  const configs = await workspace.findFiles('env-typings.json')
+  const configs = await workspace.findFiles(configFileName)
 
   const configsWatcher = workspace.createFileSystemWatcher(
-    `**/env-typings.json`,
+    `**/${configFileName}`,
     false,
     false,
     false
   )
+
+  const configFileAutoComplete = languages.registerCompletionItemProvider(
+    { language: 'json', scheme: 'file', pattern: `**/${configFileName}` },
+    {
+      provideCompletionItems() {
+        const pathCompletion = new CompletionItem('"path"')
+        pathCompletion.insertText = new SnippetString('"path": "${1}"')
+        pathCompletion.documentation =
+          new MarkdownString(`### path\nSpecify the path for your development .env file.
+        `)
+
+        const outputCompletion = new CompletionItem('"output"')
+        outputCompletion.insertText = new SnippetString('"output": "${1}"')
+        outputCompletion.documentation =
+          new MarkdownString(`### output (optional) \nSpecify the path for the output of the generated typings.\n\n default = "." (root)
+        `)
+
+        // return all completion items as array
+        return [pathCompletion, outputCompletion]
+      },
+    }
+  )
+
+  context.subscriptions.push(configFileAutoComplete)
 
   configsWatcher.onDidCreate((e) => {
     watchEnv(e)
@@ -63,12 +92,12 @@ export async function activate(context: ExtensionContext) {
 
       if (!config['path']) {
         return window.showInformationMessage(
-          'Please add "path" field in your config file at env-typings.json to let me know where your dev environment file is located so I can do the hard work for you 😎'
+          `Please add "path" field in your config file at ${configFileName} to let me know where your dev environment file is located so I can do the hard work for you 😎`
         )
       }
 
       const envWatcher = workspace.createFileSystemWatcher(
-        path.join(e.fsPath.replace('env-typings.json', ''), config['path']),
+        path.join(e.fsPath.replace(`${configFileName}`, ''), config['path']),
         true,
         false,
         false
@@ -82,7 +111,7 @@ export async function activate(context: ExtensionContext) {
         let parsedEnv = parseEnv(envContent)
 
         const writeLocation = path.join(
-          e.fsPath.replace('env-typings.json', ''),
+          e.fsPath.replace(`${configFileName}`, ''),
           config['output'] || '',
           'env.d.ts'
         )
@@ -95,7 +124,7 @@ export async function activate(context: ExtensionContext) {
     } catch (error) {
       console.log(error)
       window.showInformationMessage(
-        'Please add "path" field in your config file at env-typings.json to let me know where your dev environment file is located so I can do the hard work for you 😎'
+        `Please add "path" field in your config file at ${configFileName} to let me know where your dev environment file is located so I can do the hard work for you 😎`
       )
     }
   }
