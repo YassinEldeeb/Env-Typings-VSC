@@ -9,7 +9,8 @@ TS Env Typings is an extension to auto generate Typescript typings for your env 
 
 ## Setup
 
-
+> ⚠️ Make sure you've @types/node installed before continuing
+ 
 1- First of all, download the extension [TS Env Typings](https://marketplace.visualstudio.com/items?itemName=YassinEldeeb.env-typings)
 
 2- Specify "env-typings.json" file in the root of your project.
