@@ -1,8 +1,8 @@
 {
   "name": "env-typings",
   "badges": [],
-  "publisher": "Yassin Eldeeb",
-  "icon": "./icon.ong",
+  "publisher": "YassinEldeeb",
+  "icon": "images/icon.png",
   "keywords": [
     "env",
     "typescript",
@@ -12,13 +12,16 @@
     "types",
     "process.env"
   ],
-  "displayName": "Env Typings",
+  "displayName": "TS Env Typings",
   "description": "Automatically generate typings for process.env from your env file on save.",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.62.0"
   },
-  "repository": "https://github.com/YassinEldeeb/Env-Typings-VSC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YassinEldeeb/Env-Typings-VSC"
+  },
   "categories": [
     "Other"
   ],

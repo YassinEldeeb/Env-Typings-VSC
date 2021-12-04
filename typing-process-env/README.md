@@ -1,6 +1,6 @@
 # env-typings README
 
-Env Typings is an extension to auto generate Typescript typings for your env variables from your development .env file everytime you save the specefied file.
+TS Env Typings is an extension to auto generate Typescript typings for your env variables from your development .env file everytime you save the specefied file.
 
 ![Showoff](https://raw.githubusercontent.com/YassinEldeeb/Env-Typings-VSC/main/images/index.png)
 

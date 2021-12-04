@@ -30,7 +30,7 @@ export async function activate(context: ExtensionContext) {
 
   let listeners: { watcher: FileSystemWatcher; path: string }[] = []
 
-  const configs = await workspace.findFiles(configFileName)
+  const configs = await workspace.findFiles(`**/${configFileName}`)
 
   const configsWatcher = workspace.createFileSystemWatcher(
     `**/${configFileName}`,
@@ -122,7 +122,6 @@ export async function activate(context: ExtensionContext) {
 
       context.subscriptions.push(envWatcher)
     } catch (error) {
-      console.log(error)
       window.showInformationMessage(
         `Please add "path" field in your config file at ${configFileName} to let me know where your dev environment file is located so I can do the hard work for you 😎`
       )
