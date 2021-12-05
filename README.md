@@ -7,7 +7,7 @@ TS Env Typings is an extension to auto generate Typescript typings for your env 
 
 ![Showoff](https://raw.githubusercontent.com/YassinEldeeb/Env-Typings-VSC/main/images/index.png)
 
-## 🌟 If you prefer learning in a dev.to blog style then checkout [my blog](https://dev.to/yassineldeeb/typing-processenv-automatically-with-this-vsc-extension-10pe) instead
+## 🌟 If you prefer a more beginner friendly tutorial, check out [my blog](https://dev.to/yassineldeeb/typing-processenv-automatically-with-this-vsc-extension-10pe) instead
 
 ## Setup
 
