@@ -25,7 +25,7 @@ That's it enjoy your auto generated typings from your .env file everytime you hi
 
 ## Features
 
-1- Specify path for the generated output
+1- Specify path for the generated output using the `output` in the `env-typings.json` file.
 
 2- auto detect env variable type so that It can give you a nice example in the intellisense on how to use and parse it.
 
